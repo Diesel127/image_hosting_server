@@ -1,10 +1,56 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+ul[class],
+ol[class] {
+    padding: 0;
+    list-style: none;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class],
+ol[class],
+li,
+figure,
+figcaption {
+    margin: 0;
+}
+
 body {
+    min-height: 100vh;
+    scroll-behavior: smooth;
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
     background-color: #F2F5FF;
     font-family: "Inter", sans-serif;
     color: rgb(255, 255, 255);
 }
 
-/* Header */
+a:not([class]) {
+    text-decoration-skip-ink: auto;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+
 .header {
     display: flex;
     flex-direction: column;
@@ -16,7 +62,6 @@ body {
     text-align: center;
     font-size: 16px;
     width: 700px;
-
 }
 
 .header__text {
@@ -24,7 +69,6 @@ body {
     font-size: 14px;
 }
 
-/* button */
 .header__button {
     display: flex;
     justify-content: center;
@@ -44,7 +88,7 @@ body {
     border-radius: 7px;
 }
 
-/* hero__img */
+
 .hero {
     display: flex;
     justify-content: center;
@@ -65,7 +109,7 @@ body {
     object-fit: cover;
 }
 
-/* upload */
+
 .upload__intro {
     display: flex;
     flex-direction: column;
@@ -78,7 +122,6 @@ body {
 .upload__title {
     font-size: 16px;
     width: 700px;
-
 }
 
 .upload__description {
@@ -86,36 +129,31 @@ body {
     width: 400px;
 }
 
-/* upload-tabs */
 .upload__tabs {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 15px;
     padding-top: 50px;
-
 }
 
 .upload__tab {
     all: unset;
     font-size: 20px;
     font-weight: bold;
-    color: rgb(173, 192, 248); /* Неактивный цвет по умолчанию */
+    color: rgb(173, 192, 248);
+    cursor: pointer;
 }
 
 .upload__tab--active {
-    color: rgb(0, 96, 255); /* Активный цвет */
+    color: rgb(0, 96, 255);
 }
 
 .upload__tab:hover {
     color: rgb(105, 141, 250);
 }
 
-.upload__tab:hover {
-    color: rgb(105, 141, 250);
-}
 
-/* upload-form */
 .upload__form {
     display: flex;
     flex-direction: column;
@@ -129,6 +167,12 @@ body {
     width: 540px;
     height: 233px;
     text-align: center;
+    transition: border-color 0.3s ease;
+}
+
+.upload__dropzone.dragover {
+    border-style: solid;
+    border-color: rgb(0, 96, 255);
 }
 
 .upload__icon {
@@ -149,7 +193,7 @@ body {
     color: rgb(173, 192, 248);
 }
 
-/* upload-button */
+
 .upload__button {
     padding-top: 30px;
     padding-bottom: 50px;
@@ -168,7 +212,6 @@ body {
     border: none;
 }
 
-/* upload-current */
 .upload__container {
     display: flex;
     flex-direction: column;
@@ -189,7 +232,6 @@ body {
     text-align: left;
 }
 
-/* input + button */
 .upload__label {
     display: flex;
     align-items: center;
@@ -210,7 +252,6 @@ body {
     font-size: 14px;
     background-color: transparent;
     color: black;
-
 }
 
 .upload__copy {
@@ -222,10 +263,18 @@ body {
     color: white;
     font-size: 12px;
     cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.upload__copy:hover {
+    background-color: rgb(0, 80, 220);
+}
+
+.upload__message {
+    margin-top: 16px;
 }
 
 
-/* Container for the entire table */
 .file-list-container {
     max-width: 800px;
     margin: 0 auto;
@@ -234,7 +283,6 @@ body {
     margin-bottom: 292px;
 }
 
-/* Common style for a row (both header and list item) */
 .file-list-header,
 .file-list-item {
     display: flex;
@@ -244,19 +292,16 @@ body {
     border-bottom: 1px solid #eef0f5;
 }
 
-/* Remove border from the last item */
 .file-list-item:last-child {
     border-bottom: none;
 }
 
-/* List header */
 .file-list-header {
     color: #8a96b1;
     font-size: 14px;
     font-weight: 500;
 }
 
-/* Styles for columns */
 .file-col {
     display: flex;
     align-items: center;
@@ -277,19 +322,31 @@ body {
     justify-content: center;
 }
 
-/* File icon */
 .file-icon {
     color: #0060ff;
-    margin-right: 15px;
+    margin-right: 16px;
     font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.delete-img {
+.file-icon img {
     width: 32px;
     height: 32px;
+    object-fit: contain;
+    flex-shrink: 0;
 }
 
-/* File name */
+.file-col-name img[alt="thumbnail"] {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    flex-shrink: 0;
+    border-radius: 4px;
+    margin-right: 16px;
+}
+
 .file-name {
     color: #333;
     font-weight: 500;
@@ -299,10 +356,8 @@ body {
     text-overflow: ellipsis;
 }
 
-/* Delete button */
 .delete-btn {
     background: transparent;
-    /* REMOVE THE BACKGROUND, MAKE IT TRANSPARENT */
     border: none;
     border-radius: 50%;
     cursor: pointer;
@@ -311,13 +366,16 @@ body {
     justify-content: center;
     padding: 0;
     transition: opacity 0.2s ease;
-    /* Add a smooth transition for hover effect */
+    width: 32px;
+    height: 32px;
 }
 
-/* Hover effect */
+.delete-btn img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
 .delete-btn:hover {
-    background: transparent;
-    /* REMOVE BACKGROUND ON HOVER */
     opacity: 0.7;
-    /* Make the icon semi-transparent for user feedback */
 }

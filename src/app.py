@@ -216,16 +216,16 @@ def run_server(port=8000):
     db.connect()
     try:
         with socketserver.TCPServer(("", port), ImageServerHandler) as httpd:
-            print(f"🚀 Server running on port {port} ...")
+            print(f"Server running on port {port} ...")
             try:
                 httpd.serve_forever()
             except KeyboardInterrupt:
-                print("🛑 Server stopped by user")
+                print("Server stopped by user")
     except OSError as e:
         if e.errno == 48:
-            print(f"❌ Port {port} is already in use. Please stop the server | lsof -ti :{port} | xargs kill -9")
+            print(f"Port {port} is already in use. Please stop the server | lsof -ti :{port} | xargs kill -9")
         else:
-            print(f"❌ Error starting server: {e}")
+            print(f"Error starting server: {e}")
     finally:
         db.disconnect()
 
