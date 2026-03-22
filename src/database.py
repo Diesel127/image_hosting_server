@@ -21,12 +21,12 @@ class DatabaseManager:
             )
             print("✅ Connected to PostgreSQL")
         except Exception as e:
-            print(f"❌ Connection error: {e}")
+            print(f"Connection error: {e}")
 
     def disconnect(self):
         if self.connection:
             self.connection.close()
-            print("🛑 Disconnected from PostgreSQL")
+            print("Disconnected from PostgreSQL")
 
     def save_metadata(self, filename, original_name, size, file_type):
         try:
@@ -38,7 +38,7 @@ class DatabaseManager:
                 self.connection.commit()
                 return True
         except Exception as e:
-            print(f"❌ Save error: {e}")
+            print(f"Save error: {e}")
             return False
 
     def get_all_images(self, page=1, per_page=10):
@@ -57,7 +57,7 @@ class DatabaseManager:
 
                 return images, total
         except Exception as e:
-            print(f"❌ Retrieval error: {e}")
+            print(f"Retrieval error: {e}")
             return [], 0
 
     def delete_image(self, image_id):
@@ -73,5 +73,5 @@ class DatabaseManager:
                 self.connection.commit()
                 return filename
         except Exception as e:
-            print(f"❌ Delete error: {e}")
+            print(f"Delete error: {e}")
             return False

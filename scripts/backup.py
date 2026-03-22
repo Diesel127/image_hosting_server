@@ -28,16 +28,16 @@ def create_backup():
             f.write(result.stdout)
         print(f"✅ Backup created: {filename}")
     except subprocess.CalledProcessError as e:
-        print(f"❌ Error creating backup: {e.stderr}")
+        print(f"Error creating backup: {e.stderr}")
         sys.exit(1)
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f"Error: {e}")
         sys.exit(1)
 
 
 def list_backups():
     if not os.path.exists(BACKUP_DIR):
-        print(f"❌ The directory {BACKUP_DIR} does not exist.")
+        print(f"The directory {BACKUP_DIR} does not exist.")
         return
 
     files = sorted([f for f in os.listdir(BACKUP_DIR) if f.endswith('.sql')])
@@ -60,7 +60,7 @@ def restore_backup(filename):
     filepath = os.path.join(BACKUP_DIR, filename)
 
     if not os.path.exists(filepath):
-        print(f"❌ File {filename} not found in {BACKUP_DIR}")
+        print(f"File {filename} not found in {BACKUP_DIR}")
         sys.exit(1)
 
     with open(filepath, 'r') as f:
@@ -75,10 +75,10 @@ def restore_backup(filename):
         subprocess.run(cmd, input=sql_content, text=True, check=True)
         print(f"✅ The database has been restored from backup: {filename}")
     except subprocess.CalledProcessError as e:
-        print(f"❌ Restore error: {e}")
+        print(f"Restore error: {e}")
         sys.exit(1)
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f"Error: {e}")
         sys.exit(1)
 
 
@@ -108,7 +108,7 @@ def main():
         list_backups()
     elif args.command == "restore":
         if not args.filename:
-            print("❌ Enter the name of the file to restore")
+            print("Enter the name of the file to restore")
             sys.exit(1)
         restore_backup(args.filename)
 
