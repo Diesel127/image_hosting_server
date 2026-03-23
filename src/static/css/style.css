@@ -78,7 +78,11 @@ select {
 .header__button-btn {
     position: absolute;
     text-transform: uppercase;
-    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 0 16px;
     font-size: 12px;
     background-color: rgb(0, 96, 255);
     color: rgb(255, 255, 255);
@@ -86,6 +90,23 @@ select {
     height: 40px;
     border: none;
     border-radius: 7px;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.2s ease, opacity 0.2s ease, transform 0.05s ease;
+}
+
+.header__button-btn:hover {
+    background-color: rgb(0, 80, 220);
+}
+
+.header__button-btn:active {
+    transform: translateY(1px);
+}
+
+.header__button-btn:focus-visible {
+    outline: 2px solid rgb(173, 192, 248);
+    outline-offset: 2px;
 }
 
 
