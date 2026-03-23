@@ -50,6 +50,11 @@ select {
     font: inherit;
 }
 
+/* =========================================================
+   Header + Home page
+   - `.header__button-btn` is the CTA linking to `/upload`.
+   - `.hero__img` elements are toggled by `src/static/js/index.js`.
+   ========================================================= */
 
 .header {
     display: flex;
@@ -130,6 +135,9 @@ select {
     object-fit: cover;
 }
 
+/* =========================================================
+   Upload page UI
+   ========================================================= */
 
 .upload__intro {
     display: flex;
@@ -295,6 +303,9 @@ select {
     margin-top: 16px;
 }
 
+/* =========================================================
+   Images list UI
+   ========================================================= */
 
 .file-list-container {
     max-width: 800px;
@@ -378,6 +389,7 @@ select {
 }
 
 .delete-btn {
+    /* Round icon button used for deleting images from the list. */
     background: transparent;
     border: none;
     border-radius: 50%;

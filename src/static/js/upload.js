@@ -1,6 +1,13 @@
+// Frontend logic for the upload page (`/upload`).
+// Responsibilities:
+// - Validate drag&drop / selected files and upload them to `/upload` (backend).
+// - Show success/error messages.
+// - After a successful upload, store an entry in `localStorage` so the images
+//   list can render without fetching metadata again.
 document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('keydown', function (event) {
         if (event.key === 'Escape' || event.key === 'F5') {
+            // Quick navigation back to home (Escape/F5 used as a shortcut here).
             event.preventDefault();
             window.location.href = '/';
         }
@@ -13,10 +20,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const copyButton = document.querySelector('.upload__copy');
 
     if (imagesButton) {
+        // Switch to the images list.
         imagesButton.addEventListener('click', () => window.location.href = '/images-list');
     }
 
     const showMessage = (message, isError = false) => {
+        // Create a message element once and reuse it.
         let msgEl = document.querySelector('.upload__message');
         if (!msgEl) {
             msgEl = document.createElement('p');
@@ -28,6 +37,8 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const uploadFile = async (file) => {
+        // Upload a single file to the backend.
+        // The backend returns { success, filename, url, message } (JSON).
         const formData = new FormData();
         formData.append('file', file);
 
@@ -40,6 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const data = await response.json();
 
             if (data.success) {
+                // Keep a lightweight client-side list for UI rendering.
                 const storedFiles = JSON.parse(localStorage.getItem('uploadedImages')) || [];
 
                 const getNextImageNumber = () =>
@@ -50,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const reader = new FileReader();
                 reader.onload = (event) => {
+                    // Store a local DataURL thumbnail so the list can display an image.
                     storedFiles.push({
                         name: data.filename,
                         displayName: displayName,
@@ -61,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 reader.readAsDataURL(file);
 
                 if (currentUploadInput) {
+                    // Show a direct URL for the last uploaded file.
                     currentUploadInput.value = `https://image-hosting-server.com/${data.filename}`;
                 }
                 showMessage('File uploaded successfully!');
@@ -73,6 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const handleAndStoreFiles = (files) => {
+        // Upload all selected files sequentially (await inside uploadFile).
         if (!files || files.length === 0) return;
         for (const file of files) {
             uploadFile(file);
@@ -80,6 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     if (copyButton && currentUploadInput) {
+        // Copy the current URL from the readonly input to clipboard.
         copyButton.addEventListener('click', () => {
             const textToCopy = currentUploadInput.value;
             if (textToCopy && textToCopy !== 'https://') {
@@ -93,6 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (fileUpload) {
         fileUpload.addEventListener('change', (event) => {
+            // User selected files via the file picker.
             handleAndStoreFiles(event.target.files);
             event.target.value = '';
         });
@@ -101,6 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (dropzone) {
         ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
             dropzone.addEventListener(eventName, (e) => {
+                // Prevent the browser from opening dragged files.
                 e.preventDefault();
                 e.stopPropagation();
             });
@@ -110,6 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
         dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
         dropzone.addEventListener('drop', (event) => {
             dropzone.classList.remove('dragover');
+            // Handle dropped files.
             handleAndStoreFiles(event.dataTransfer.files);
         });
     }

@@ -1,41 +1,58 @@
 services:
   db:
+    # PostgreSQL database container.
     image: postgres:15
+    # Loads DB_HOST/DB_NAME/DB_USER/DB_PASSWORD/DB_PORT and related variables.
     env_file:
       - .env
     volumes:
+      # Persistent PostgreSQL data directory.
       - db_data:/var/lib/postgresql/data
+      # Runs init.sql only on first container start (when db_data is empty).
       - ./config/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
+      # Expose PostgreSQL on host port 5433 (container uses 5432 internally).
       - "5433:5432"
     healthcheck:
+      # Used by `depends_on` in the app service so the backend starts after DB is ready.
       test: [ "CMD-SHELL", "pg_isready -U ${DB_USER}" ]
       interval: 5s
       timeout: 5s
       retries: 5
 
   app:
+    # Backend built from the local Dockerfile (Python + http.server).
     build: .
+    # Loads DB_* and BACKUP_DIR/DB_CONTAINER_NAME, etc.
     env_file:
       - .env
     volumes:
+      # Persist uploaded image files on the host.
       - ./images:/images
     depends_on:
       db:
+        # Wait for DB healthcheck to pass.
         condition: service_healthy
     ports:
+      # Expose backend directly on the host for local debugging.
       - "8000:8000"
 
   nginx:
+    # Reverse proxy for static files + forwarding requests to the backend.
     image: nginx:alpine
     ports:
+      # Public HTTP port for the UI.
       - "8080:8080"
     volumes:
+      # Provide the custom Nginx config.
       - ./config/nginx.conf:/etc/nginx/nginx.conf:ro
+      # Serve uploaded images from the same host folder.
       - ./images:/images:ro
+      # Serve static frontend assets from the source tree.
       - ./src/static:/app/src/static:ro
     depends_on:
       - app
 
 volumes:
+  # Named volume for PostgreSQL data persistence.
   db_data:

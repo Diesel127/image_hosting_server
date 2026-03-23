@@ -12,16 +12,24 @@
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
+<!--
+  Home page:
+  - Shows a short marketing header.
+  - Contains a call-to-action link to `/upload`.
+  - A small JS script selects one of the `.hero__img` images at random.
+-->
 <header>
     <div class="header">
         <h1 class="header__title">Upload Photos</h1>
         <p class="header__text">Upload selfies, memes, or any fun pictures here.</p>
     </div>
     <div class="header__button">
+        <!-- CTA button to open the upload screen -->
         <a href="/upload" class="header__button-btn">Upload & Share</a>
     </div>
 </header>
 <main>
+    <!-- Random showcase images; JS toggles `.is-visible` on one element -->
     <div class="hero">
         <div class="hero__img"><img class="img" src="/static/img/cat.png" alt="cat"></div>
         <div class="hero__img"><img class="img" src="/static/img/zero.png" alt="zero"></div>

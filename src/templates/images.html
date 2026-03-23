@@ -12,6 +12,12 @@
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
+<!--
+  Images list page:
+  - Uses localStorage key `uploadedImages` to render a list.
+  - Uses the Images tab to redirect back to upload.
+  - Delete buttons call the backend API to delete from DB + disk.
+-->
 <nav class="upload__tabs">
     <button id="upload-tab-btn" class="upload__tab">Upload Images</button>
     <button id="images-tab-btn" class="upload__tab upload__tab--active">Images List</button>
