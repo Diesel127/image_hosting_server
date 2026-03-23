@@ -29,6 +29,13 @@ services:
     volumes:
       # Persist uploaded image files on the host.
       - ./images:/images
+      # Mount current frontend assets into the backend container as well.
+      # This matters when you open the app directly on port `8000`
+      # (without going through nginx). Then `/static/*` is served by the
+      # Python backend, not by nginx.
+      - ./src/static:/app/src/static:ro
+      # Same idea for HTML templates so `/` and `/upload` reflect local changes.
+      - ./src/templates:/app/src/templates:ro
     depends_on:
       db:
         # Wait for DB healthcheck to pass.

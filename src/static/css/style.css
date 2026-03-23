@@ -81,7 +81,6 @@ select {
 }
 
 .header__button-btn {
-    position: absolute;
     text-transform: uppercase;
     display: flex;
     align-items: center;
