@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     ${fileData.url ? `<img src="${fileData.url}" alt="thumbnail">` : ''}
                     <span class="file-name" title="${fileData.originalName || fileData.displayName || fileData.name}">${fileData.displayName || fileData.name}</span>
                 </div>
-                <div class="file-col file-col-url">https://group6-image-hosting-server.com/${fileData.name}</div>
+                <div class="file-col file-col-url">https://image-hosting-server.com/${fileData.name}</div>
                 <div class="file-col file-col-delete">
                     <button class="delete-btn" data-index="${index}"><img src="/static/img/delete.png" alt="delete icon"></button>
                 </div>
