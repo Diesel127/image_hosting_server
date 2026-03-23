@@ -3,7 +3,7 @@
 A web application for uploading, storing, and viewing images.
 An educational alternative to services like Imgur and Dropbox, built with pure Python without frameworks.
 
-![img_for_readme1.jpg](src/static/img/img_for_readme1.jpg)
+![img_for_readme1.png](src/static/img/img_for_readme1.png)
 
 ---
 
@@ -15,7 +15,7 @@ An educational alternative to services like Imgur and Dropbox, built with pure P
 - **Containerization**: Docker & Docker Compose
 - **Frontend**: HTML5, CSS3, JavaScript
 
-![img_for_readme2.jpg](src/static/img/img_for_readme2.jpg)
+![img_for_readme2.png](src/static/img/img_for_readme2.png)
 
 ---
 
