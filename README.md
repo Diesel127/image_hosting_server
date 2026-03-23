@@ -59,8 +59,8 @@ group6_image_hosting_server/
 ### Docker Compose (Recommended)
 
 ```bash
-git clone git@github.com:YOUR_USERNAME/group6_image_hosting_server.git
-cd group6_image_hosting_server
+git clone https://github.com/Diesel127/image_hosting_server.git
+cd image_hosting_server
 docker compose up --build
 ```
 
@@ -121,7 +121,7 @@ Create `.env` file in project root:
 
 ```env
 DB_HOST=localhost
-DB_NAME=group6_image_hosting_server_db
+DB_NAME=image_hosting_server_db
 DB_USER=postgres
 DB_PASSWORD=your_password
 DB_PORT=5432
