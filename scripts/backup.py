@@ -4,12 +4,19 @@ from datetime import datetime
 import os
 import argparse
 
+# Directory where generated SQL dumps are saved.
 BACKUP_DIR = os.getenv("BACKUP_DIR", "./backups")
+
+# Docker container name that runs PostgreSQL.
+# This must match the actual container name in your compose setup.
 CONTAINER_NAME = os.getenv("DB_CONTAINER_NAME", "group6_image_hosting_server-db-1")
+
+# Database connection details passed to pg_dump/psql inside the container.
 DB_NAME = os.getenv("DB_NAME", "group6_image_hosting_server_db")
 DB_USER = os.getenv("DB_USER", "postgres")
 
-
+# Create a new database dump using `pg_dump` executed inside the Postgres container.
+# Produces a file like: backups/backup_YYYY-MM-DD_HHMMSS.sql
 def create_backup():
     timestamp = datetime.now().strftime("%Y-%m-%d_%H%M%S")
     filename = f"backup_{timestamp}.sql"
@@ -18,7 +25,9 @@ def create_backup():
     os.makedirs(BACKUP_DIR, exist_ok=True)
 
     cmd = [
+        # Run commands inside the running postgres container.
         "docker", "exec", CONTAINER_NAME,
+        # Dump database schema + data as SQL text.
         "pg_dump", "-U", DB_USER, "-d", DB_NAME
     ]
 
@@ -35,6 +44,7 @@ def create_backup():
         sys.exit(1)
 
 
+# List all .sql files in BACKUP_DIR to help choose a restore target.
 def list_backups():
     if not os.path.exists(BACKUP_DIR):
         print(f"The directory {BACKUP_DIR} does not exist.")
@@ -53,6 +63,9 @@ def list_backups():
         print(f"📄 {file}")
 
 
+# Restore a backup by piping the SQL dump into `psql` inside the postgres container.
+# NOTE: This script does not apply any safety checks; restoring overwrites state
+# according to what the dump contains.
 def restore_backup(filename):
     if not filename.endswith('.sql'):
         filename += '.sql'
@@ -67,7 +80,9 @@ def restore_backup(filename):
         sql_content = f.read()
 
     cmd = [
+        # `-i` keeps stdin open for piping sql_content.
         "docker", "exec", "-i", CONTAINER_NAME,
+        # Run psql against the target DB and read commands from stdin.
         "psql", "-U", DB_USER, "-d", DB_NAME
     ]
 
@@ -82,6 +97,10 @@ def restore_backup(filename):
         sys.exit(1)
 
 
+# Simple CLI wrapper:
+#   - `create`  -> create a new pg_dump file
+#   - `list`    -> list available dump files
+#   - `restore` -> restore a chosen dump file into the DB
 def main():
     parser = argparse.ArgumentParser(
         description="PostgreSQL database backup script",

@@ -1,3 +1,7 @@
+/* CSS Reset
+   Keeps styling predictable by removing default margins/paddings and making box-sizing consistent.
+   This reduces cross-browser layout differences. */
+
 /* Set box sizing */
 *,
 *::before,

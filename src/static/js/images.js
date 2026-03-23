@@ -1,6 +1,12 @@
+// Frontend logic for the images list page (`/images-list`).
+// - Renders the list from `localStorage.uploadedImages`.
+// - Handles deleting an image:
+//   1) Calls backend API `/api/images/<id>` to delete from DB + disk
+//   2) Updates localStorage and re-renders the UI
 document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('keydown', function (event) {
         if (event.key === 'F5' || event.key === 'Escape') {
+            // Redirect back to upload for quick navigation.
             event.preventDefault();
             window.location.href = '/upload';
         }
@@ -10,14 +16,17 @@ document.addEventListener('DOMContentLoaded', function () {
     const uploadRedirectButton = document.getElementById('upload-tab-btn');
 
     if (uploadRedirectButton) {
+        // Go back to upload screen.
         uploadRedirectButton.addEventListener('click', () => window.location.href = '/upload');
     }
 
     const displayFiles = () => {
+        // Read client-side list (contains thumbnail DataURLs).
         const storedFiles = JSON.parse(localStorage.getItem('uploadedImages')) || [];
         fileListWrapper.innerHTML = '';
 
         if (storedFiles.length === 0) {
+            // Empty state.
             fileListWrapper.innerHTML = '<p class="upload__promt" style="text-align: center; margin-top: 50px;">No images uploaded yet.</p>';
             return;
         }
@@ -60,6 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const addDeleteListeners = () => {
+        // Attach click handlers for every rendered delete button.
         document.querySelectorAll('.delete-btn').forEach(button => {
             button.addEventListener('click', async (event) => {
                 const indexToDelete = parseInt(event.currentTarget.dataset.index);
@@ -68,6 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 if (fileToDelete && fileToDelete.name) {
                     try {
+                        // Ask backend for DB metadata so we know the DB `id` to delete.
                         const imagesResponse = await fetch('/api/images');
                         const imagesResult = await imagesResponse.json();
 
@@ -75,6 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             const imageRecord = imagesResult.images.find(img => img.filename === fileToDelete.name);
 
                             if (imageRecord) {
+                                // Delete by DB id.
                                 const deleteResponse = await fetch(`/api/images/${imageRecord.id}`, {
                                     method: 'DELETE'
                                 });

@@ -12,6 +12,13 @@
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
+<!--
+  Upload page:
+  - Header/description
+  - Two-tab navigation (Upload / Images list)
+  - File dropzone + upload input
+  - "Current Upload" section for displaying/copying the resulting URL
+-->
 <section class="upload__intro">
     <h2 class="upload__title">Upload Photos</h2>
     <p class="upload__description">Upload selfies, memes, or any fun pictures here.</p>
@@ -25,10 +32,13 @@
         <div class="upload__icon">
             <img src="/static/img/upload-cloud.png" alt="upload icon">
         </div>
+        <!-- Text displayed inside the dashed drop area -->
         <p class="upload__promt">Select a file or drag and drop here</p>
+        <!-- Validation rules shown to the user -->
         <p class="upload__info">Only support .jpg, .png and gif. <br>Maximum file size is 5MB</p>
     </div>
     <div class="upload__button">
+        <!-- Hidden <input type=file> paired with a styled <label> -->
         <input type="file" id="file-upload" accept="image/*" style="display: none;" multiple>
         <label for="file-upload" class="upload__button-btn">Browse your file</label>
     </div>
@@ -37,6 +47,7 @@
             <h2 class="upload__title-current">Current Upload</h2>
             <div class="upload__label">
                 <input type="text" class="upload__input" placeholder="https://" readonly/>
+                <!-- Copy button uses JS to copy the URL from the readonly input -->
                 <button class="upload__copy">COPY</button>
             </div>
         </div>
