@@ -3,7 +3,7 @@
 A web application for uploading, storing, and viewing images.
 An educational alternative to services like Imgur and Dropbox, built with pure Python without frameworks.
 
-![img1_for_readme.jpg](src/static/img/img1_for_readme.jpg)
+![img_for_readme1.jpg](src/static/img/img_for_readme1.jpg)
 
 ---
 
@@ -15,6 +15,8 @@ An educational alternative to services like Imgur and Dropbox, built with pure P
 - **Containerization**: Docker & Docker Compose
 - **Frontend**: HTML5, CSS3, JavaScript
 
+![img_for_readme2.jpg](src/static/img/img_for_readme2.jpg)
+
 ---
 
 ## ✅ Features
@@ -24,8 +26,6 @@ An educational alternative to services like Imgur and Dropbox, built with pure P
 - Metadata storage in PostgreSQL
 - Image deletion (file + database record)
 - Database backup and restore functionality
-
-![img2_for_readme.jpg](src/static/img/img2_for_readme.jpg)
 
 ---
 
@@ -128,9 +128,3 @@ DB_PORT=5432
 BACKUP_DIR=./backups
 DB_CONTAINER_NAME=group6_image_hosting_server-db-1
 ```
-
----
-
-## 👥 Authors
-
-- Group 6 - Educational project
