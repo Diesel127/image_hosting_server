@@ -84,7 +84,7 @@ class ImageServerHandler(http.server.BaseHTTPRequestHandler):
                 'success': True,
                 'message': 'File uploaded successfully',
                 'filename': saved_name,
-                'url': f'https://group6-image-hosting-server.com/{saved_name}'
+                'url': f'https://image-hosting-server.com/{saved_name}'
             }).encode('utf-8'))
 
         except Exception as e:

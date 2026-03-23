@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 reader.readAsDataURL(file);
 
                 if (currentUploadInput) {
-                    currentUploadInput.value = `https://group6-image-hosting-server.com/${data.filename}`;
+                    currentUploadInput.value = `https://image-hosting-server.com/${data.filename}`;
                 }
                 showMessage('File uploaded successfully!');
             } else {
